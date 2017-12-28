@@ -1,0 +1,3 @@
+[submodule "modularity"]
+	path = modularity
+	url = https://github.com/desetude/modularity

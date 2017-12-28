@@ -1,0 +1,4 @@
+/.idea
+*.iml
+/necessities-api/target
+/necessities-impl/target
