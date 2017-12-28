@@ -1,4 +1,4 @@
 # If true
-per-warp-permission: false
+perWarpPermission: false
 
 warps:

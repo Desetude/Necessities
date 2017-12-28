@@ -1,4 +1,4 @@
-package com.desetude.necessities.modules.warp.commands;
+package com.desetude.necessities.modules.warp;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;

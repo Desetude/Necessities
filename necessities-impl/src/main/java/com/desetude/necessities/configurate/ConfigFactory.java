@@ -6,13 +6,8 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.inject.Inject;
-import ninja.leaping.configurate.ConfigurationNode;
-import ninja.leaping.configurate.ConfigurationOptions;
-import ninja.leaping.configurate.loader.ConfigurationLoader;
-import ninja.leaping.configurate.yaml.YAMLConfigurationLoader;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
-import org.yaml.snakeyaml.DumperOptions;
 
 import java.io.File;
 
@@ -39,26 +34,13 @@ public class ConfigFactory implements Listener {
                             plugin.getLogger().info("Copied resource " + file.getName());
                         }
 
-                        return new Config<>(createLoader(file), key.type);
+                        return new Config<>(file, key.type);
                     }
                 });
     }
 
     public File getDir() {
         return this.dir;
-    }
-
-    public ConfigurationLoader<ConfigurationNode> createLoader(File file) {
-        return YAMLConfigurationLoader.builder()
-                .setFile(file)
-                .setIndent(2)
-                .build();
-    }
-
-    public ConfigurationLoader<ConfigurationNode> createLoader(String name) {
-        File file = new File(this.dir, name + ".yml");
-        file.getAbsoluteFile().getParentFile().mkdirs();
-        return this.createLoader(file);
     }
 
     public void saveConfigs() {

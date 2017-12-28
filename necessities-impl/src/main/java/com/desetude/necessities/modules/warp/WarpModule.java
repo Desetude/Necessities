@@ -6,7 +6,6 @@ import com.desetude.necessities.configurate.Config;
 import com.desetude.necessities.configurate.InjectConfig;
 import com.desetude.necessities.configurate.PluginLogger;
 import com.desetude.necessities.lifecycle.InitializationEvent;
-import com.desetude.necessities.modules.warp.commands.WarpCommands;
 import com.desetude.necessities.warp.WarpService;
 import com.google.inject.Inject;
 import org.bukkit.Bukkit;

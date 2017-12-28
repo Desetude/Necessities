@@ -1,4 +1,3 @@
 #Modules: warp, ...
 modules:
-  warp:
-    enabled: true
+  warp: true

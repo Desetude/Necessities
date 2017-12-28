@@ -23,22 +23,16 @@ public class Necessities extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        save();
     }
 
     public void reload() {
         //TODO: async
-        save();
         load();
-    }
-
-    private void save() {
-        this.configFactory.saveConfigs();
     }
 
     public void load() {
         this.commandManager = new BukkitCommandManager(this);
-        this.configFactory = new ConfigFactory(getDataFolder());
+        this.configFactory = new ConfigFactory(getDataFolder(), this);
 
         Config<NecessitiesConfig> modulesConfig = this.configFactory.createMapping("config", NecessitiesConfig.class);
         modulesConfig.load();

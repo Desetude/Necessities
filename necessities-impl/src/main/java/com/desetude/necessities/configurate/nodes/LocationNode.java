@@ -1,6 +1,5 @@
 package com.desetude.necessities.configurate.nodes;
 
-import ninja.leaping.configurate.objectmapping.Setting;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -10,12 +9,12 @@ import java.util.UUID;
 
 public class LocationNode {
 
-    @Setting protected UUID world;
-    @Setting protected double x;
-    @Setting protected double y;
-    @Setting protected double z;
-    @Setting protected float pitch;
-    @Setting protected float yaw;
+    protected UUID world;
+    protected double x;
+    protected double y;
+    protected double z;
+    protected float pitch;
+    protected float yaw;
 
     public LocationNode() {
     }
