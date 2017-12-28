@@ -31,7 +31,7 @@
         </dependency>
         <dependency>
             <groupId>ninja.leaping.configurate</groupId>
-            <artifactId>configurate-hocon</artifactId>
+            <artifactId>configurate-yaml</artifactId>
             <version>3.3</version>
         </dependency>
         <dependency>

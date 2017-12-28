@@ -3,8 +3,8 @@ package com.desetude.necessities.configurate;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
-import ninja.leaping.configurate.commented.CommentedConfigurationNode;
-import ninja.leaping.configurate.commented.SimpleCommentedConfigurationNode;
+import ninja.leaping.configurate.ConfigurationNode;
+import ninja.leaping.configurate.SimpleConfigurationNode;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
 import ninja.leaping.configurate.objectmapping.ObjectMapper;
 import ninja.leaping.configurate.objectmapping.ObjectMappingException;
@@ -13,17 +13,17 @@ import java.io.IOException;
 
 public class Config<T> {
 
-    private final ConfigurationLoader<CommentedConfigurationNode> loader;
+    private final ConfigurationLoader<ConfigurationNode> loader;
     private final ObjectMapper<T>.BoundInstance configMapper;
-    private CommentedConfigurationNode root;
+    private ConfigurationNode root;
     private T object;
     private boolean loadAttempted;
 
-    public Config(ConfigurationLoader<CommentedConfigurationNode> loader, Class<T> type) throws ConfigLoadException {
+    public Config(ConfigurationLoader<ConfigurationNode> loader, Class<T> type) throws ConfigLoadException {
         try {
             this.loader = checkNotNull(loader, "loader");
             this.configMapper = ObjectMapper.forClass(type).bindToNew();
-            this.root = SimpleCommentedConfigurationNode.root();
+            this.root = SimpleConfigurationNode.root();
             this.object = configMapper.populate(root);
         } catch (ObjectMappingException e) {
             throw new ConfigLoadException(e);

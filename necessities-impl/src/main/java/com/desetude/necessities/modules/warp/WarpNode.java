@@ -9,6 +9,8 @@ import org.bukkit.Location;
 @ConfigSerializable
 public class WarpNode extends LocationNode implements Warp {
 
+    @Setting private String name;
+
     public WarpNode(){
     }
 
@@ -17,9 +19,6 @@ public class WarpNode extends LocationNode implements Warp {
 
         this.name = name;
     }
-
-    @Setting
-    private String name;
 
     @Override
     public String getName() {

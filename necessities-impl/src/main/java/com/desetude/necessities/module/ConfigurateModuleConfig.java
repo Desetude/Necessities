@@ -1,13 +1,14 @@
 package com.desetude.necessities.module;
 
 import com.desetude.modularity.config.ModuleConfig;
+import com.desetude.necessities.NecessitiesConfig;
 import com.desetude.necessities.configurate.Config;
 
 public class ConfigurateModuleConfig implements ModuleConfig {
 
-    private Config<ModulesConfig> config;
+    private Config<NecessitiesConfig> config;
 
-    public ConfigurateModuleConfig(Config<ModulesConfig> config) {
+    public ConfigurateModuleConfig(Config<NecessitiesConfig> config) {
         this.config = config;
     }
 

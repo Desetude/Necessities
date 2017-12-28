@@ -1,16 +1,16 @@
-package com.desetude.necessities.module;
+package com.desetude.necessities;
 
 import ninja.leaping.configurate.objectmapping.Setting;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ModulesConfig {
+public class NecessitiesConfig {
 
-    @Setting(comment = "Modules: warp")
+    @Setting
     private Map<String, Boolean> modules;
 
-    public ModulesConfig() {
+    public NecessitiesConfig() {
         this.modules = new HashMap<>();
         this.modules.put("warp", true);
     }
