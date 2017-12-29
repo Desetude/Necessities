@@ -1,5 +1,6 @@
 package com.desetude.necessities.configurate.nodes;
 
+import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -7,6 +8,7 @@ import org.bukkit.World;
 import java.util.Optional;
 import java.util.UUID;
 
+@ConfigSerializable
 public class LocationNode {
 
     protected UUID world;

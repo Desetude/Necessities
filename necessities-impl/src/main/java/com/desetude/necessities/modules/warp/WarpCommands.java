@@ -9,7 +9,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class WarpCommands extends BaseCommand {
 
@@ -43,6 +45,17 @@ public class WarpCommands extends BaseCommand {
 
         player.teleport(loc.get());
         player.sendMessage(ChatColor.LIGHT_PURPLE + "Warped!");
+    }
+
+    @CommandAlias("warps")
+    public void warps(Player player) {
+        List<Warp> warps = this.service.getAllWarps();
+
+        player.sendMessage(ChatColor.GOLD + "There are " + ChatColor.RED + ChatColor.GOLD + warps.size() + " warps.");
+
+        player.sendMessage(ChatColor.GOLD + "Warps" + ChatColor.RESET + ": " +
+                String.join(", ", warps.stream().map(Warp::getName).collect(Collectors.toList()))
+        );
     }
 
 }

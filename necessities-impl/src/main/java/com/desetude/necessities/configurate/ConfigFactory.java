@@ -2,14 +2,19 @@ package com.desetude.necessities.configurate;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.desetude.necessities.Necessities;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.inject.Inject;
+import ninja.leaping.configurate.ConfigurationNode;
+import ninja.leaping.configurate.loader.ConfigurationLoader;
+import ninja.leaping.configurate.yaml.YAMLConfigurationLoader;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
+import java.io.InputStream;
 
 public class ConfigFactory implements Listener {
 
@@ -29,14 +34,33 @@ public class ConfigFactory implements Listener {
                         File file = new File(dir, key.name + ".yml");
                         file.getAbsoluteFile().getParentFile().mkdirs();
 
-                        if (!file.exists()) {
+                        InputStream is = Necessities.class.getResourceAsStream("/" + file.getName());
+
+                        plugin.getLogger().info("is == null = " + (is == null));
+
+                        if (!file.exists() && is != null) {
                             plugin.saveResource(file.getName(), false);
-                            plugin.getLogger().info("Copied resource " + file.getName());
+                            plugin.getLogger().info("Copied resource: " + file.getName());
+                        } else {
+                            plugin.getLogger().info("Didn't copy resource: " + file.getName());
                         }
 
-                        return new Config<>(file, key.type);
+                        return new Config<>(createLoader(file), key.type);
                     }
                 });
+    }
+
+    public ConfigurationLoader<ConfigurationNode> createLoader(File file) {
+        return YAMLConfigurationLoader.builder()
+                .setFile(file)
+                .setIndent(2)
+                .build();
+    }
+
+    public ConfigurationLoader<ConfigurationNode> createLoader(String name) {
+        File file = new File(this.dir, name + ".yml");
+        file.getAbsoluteFile().getParentFile().mkdirs();
+        return this.createLoader(file);
     }
 
     public File getDir() {

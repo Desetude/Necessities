@@ -5,6 +5,7 @@ import com.desetude.modularity.additionalmodules.BukkitGuiceModule;
 import com.desetude.modularity.loader.ModuleLoader;
 import com.desetude.necessities.configurate.Config;
 import com.desetude.necessities.configurate.ConfigFactory;
+import com.desetude.necessities.lifecycle.DeinitializationEvent;
 import com.desetude.necessities.lifecycle.InitializationEvent;
 import com.desetude.necessities.module.ConfigurateModuleConfig;
 import com.desetude.necessities.module.NecessitiesGuiceModule;
@@ -23,6 +24,9 @@ public class Necessities extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        this.commandManager.unregisterCommands();
+
+        Bukkit.getPluginManager().callEvent(new DeinitializationEvent());
     }
 
     public void reload() {

@@ -34,6 +34,11 @@
             <artifactId>acf-bukkit</artifactId>
             <version>0.5.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>ninja.leaping.configurate</groupId>
+            <artifactId>configurate-yaml</artifactId>
+            <version>3.3</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -64,12 +69,16 @@
                             <dependencyReducedPomLocation>${build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
                             <artifactSet>
                                 <includes>
-                                    <include>com.desetude:modularity</include>
                                     <include>com.desetude:necessities-api</include>
-                                    <include>co.aikar</include> <!-- ACF -->
-                                    <include>com.google.inject</include> <!-- Guice/Modularity -->
-                                    <include>org.atteo.classindex</include> <!-- Modularity -->
+
+                                    <include>com.desetude:modularity</include>
+                                    <include>com.google.inject</include> <!-- Modularity dep -->
+                                    <include>org.atteo.classindex</include> <!-- Modularity dep -->
+
+                                    <include>co.aikar</include> <!-- ACF & dep -->
                                     <include>net.jodah:expiringmap</include> <!-- ACF dep -->
+
+                                    <include>ninja.leaping.configurate</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
