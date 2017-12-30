@@ -36,13 +36,8 @@ public class ConfigFactory implements Listener {
 
                         InputStream is = Necessities.class.getResourceAsStream("/" + file.getName());
 
-                        plugin.getLogger().info("is == null = " + (is == null));
-
                         if (!file.exists() && is != null) {
                             plugin.saveResource(file.getName(), false);
-                            plugin.getLogger().info("Copied resource: " + file.getName());
-                        } else {
-                            plugin.getLogger().info("Didn't copy resource: " + file.getName());
                         }
 
                         return new Config<>(createLoader(file), key.type);

@@ -5,17 +5,19 @@ import com.desetude.modularity.additionalmodules.BukkitGuiceModule;
 import com.desetude.modularity.loader.ModuleLoader;
 import com.desetude.necessities.configurate.Config;
 import com.desetude.necessities.configurate.ConfigFactory;
-import com.desetude.necessities.lifecycle.DeinitializationEvent;
-import com.desetude.necessities.lifecycle.InitializationEvent;
 import com.desetude.necessities.module.ConfigurateModuleConfig;
+import com.desetude.necessities.module.LifecycleListener;
 import com.desetude.necessities.module.NecessitiesGuiceModule;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Necessities extends JavaPlugin {
 
-    private ConfigFactory configFactory;
     private BukkitCommandManager commandManager;
+    private List<LifecycleListener> lifecycleListeners;
+    private boolean loaded = false;
 
     @Override
     public void onEnable() {
@@ -24,9 +26,13 @@ public class Necessities extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        this.commandManager.unregisterCommands();
+        if (this.loaded) {
+            this.commandManager.unregisterCommands();
 
-        Bukkit.getPluginManager().callEvent(new DeinitializationEvent());
+            this.lifecycleListeners.forEach(LifecycleListener::close);
+
+            this.loaded = false;
+        }
     }
 
     public void reload() {
@@ -34,21 +40,25 @@ public class Necessities extends JavaPlugin {
         load();
     }
 
-    public void load() {
+    private void load() {
         this.commandManager = new BukkitCommandManager(this);
-        this.configFactory = new ConfigFactory(getDataFolder(), this);
+        ConfigFactory configFactory = new ConfigFactory(getDataFolder(), this);
 
-        Config<NecessitiesConfig> modulesConfig = this.configFactory.createMapping("config", NecessitiesConfig.class);
+        Config<NecessitiesConfig> modulesConfig = configFactory.createMapping("config", NecessitiesConfig.class);
         modulesConfig.load();
+
+        this.lifecycleListeners = new ArrayList<>();
 
         new ModuleLoader()
                 .addInjectorModules(
                         new BukkitGuiceModule(this),
-                        new NecessitiesGuiceModule(getLogger(), this.configFactory, this.commandManager)
+                        new NecessitiesGuiceModule(getLogger(), configFactory, this.commandManager, this.lifecycleListeners)
                 ).setConfig(new ConfigurateModuleConfig(modulesConfig))
                 .load();
 
-        Bukkit.getPluginManager().callEvent(new InitializationEvent());
+        this.lifecycleListeners.forEach(LifecycleListener::initialize);
+
+        this.loaded = true;
     }
 
 }

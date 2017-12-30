@@ -1,9 +1,12 @@
-package com.desetude.necessities.lifecycle;
+package com.desetude.necessities.event;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class InitializationEvent extends Event {
+/**
+ * Removes the need for HandlerList in every event.
+ */
+public abstract class NecessitiesEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
 
@@ -15,4 +18,5 @@ public class InitializationEvent extends Event {
     public HandlerList getHandlers() {
         return handlers;
     }
+
 }

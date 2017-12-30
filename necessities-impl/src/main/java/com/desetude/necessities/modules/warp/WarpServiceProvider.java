@@ -5,8 +5,10 @@ import com.desetude.necessities.configurate.Config;
 import com.desetude.necessities.configurate.InjectConfig;
 import com.desetude.necessities.warp.Warp;
 import com.desetude.necessities.warp.WarpService;
+import com.desetude.necessities.warp.event.WarpCreateEvent;
 import com.google.common.collect.ImmutableList;
 import ninja.leaping.configurate.objectmapping.Setting;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 import java.util.ArrayList;
@@ -32,18 +34,28 @@ public class WarpServiceProvider implements WarpService {
 
     @Override
     public Optional<Warp> getWarp(String name) {
-        return getWarps().stream().filter(node -> node.getName().equals(name)).map(node -> (Warp) node).findFirst();
+        return getWarps().stream().filter(node -> node.getName().equals(name.toLowerCase())).map(node -> (Warp) node).findFirst();
     }
 
     @Override
-    public void addWarp(String name, Location location) {
-        removeWarp(name);
-        getWarps().add(new WarpNode(location, name));
+    public Warp setWarp(String name, Location location) {
+        name = name.toLowerCase();
+        Optional<Warp> opt = getWarp(name);
+
+        if (opt.isPresent()) {
+            opt.get().setLocation(location);
+            return opt.get();
+        } else {
+            WarpNode warp = new WarpNode(location, name);
+            Bukkit.getPluginManager().callEvent(new WarpCreateEvent(warp));
+            getWarps().add(new WarpNode(location, name));
+            return warp;
+        }
     }
 
     @Override
     public boolean removeWarp(String name) {
-        return getWarps().removeIf(warp -> warp.getName().equals(name));
+        return getWarps().removeIf(warp -> warp.getName().equals(name.toLowerCase()));
     }
 
     @Override

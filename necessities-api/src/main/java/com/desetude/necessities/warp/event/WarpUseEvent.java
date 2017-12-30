@@ -2,13 +2,16 @@ package com.desetude.necessities.warp.event;
 
 import com.desetude.necessities.warp.Warp;
 import org.bukkit.entity.Player;
-import org.bukkit.event.HandlerList;
+import org.bukkit.event.Cancellable;
 
-public class WarpUseEvent extends WarpEvent {
-
-    private static final HandlerList handlers = new HandlerList();
+/**
+ * Called when a {@link Player} uses a warp. If cancelled, the
+ * {@link Player} will not be charged or teleported.
+ */
+public class WarpUseEvent extends WarpEvent implements Cancellable {
 
     private final Player player;
+    private boolean isCancelled = false;
 
     public WarpUseEvent(Warp warp, Player player) {
         super(warp);
@@ -16,17 +19,18 @@ public class WarpUseEvent extends WarpEvent {
         this.player = player;
     }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
-
     public Player getPlayer() {
         return this.player;
     }
 
     @Override
-    public HandlerList getHandlers() {
-        return handlers;
+    public boolean isCancelled() {
+        return this.isCancelled;
+    }
+
+    @Override
+    public void setCancelled(boolean cancelled) {
+        this.isCancelled = cancelled;
     }
 
 }

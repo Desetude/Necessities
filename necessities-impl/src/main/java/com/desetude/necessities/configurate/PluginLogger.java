@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
 
 @BindingAnnotation
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD })
+@Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
 public @interface PluginLogger {
+
 }

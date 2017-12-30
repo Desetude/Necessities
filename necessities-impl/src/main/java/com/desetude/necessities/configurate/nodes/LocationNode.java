@@ -1,5 +1,6 @@
 package com.desetude.necessities.configurate.nodes;
 
+import ninja.leaping.configurate.objectmapping.Setting;
 import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -11,18 +12,18 @@ import java.util.UUID;
 @ConfigSerializable
 public class LocationNode {
 
-    protected UUID world;
-    protected double x;
-    protected double y;
-    protected double z;
-    protected float pitch;
-    protected float yaw;
+    @Setting protected String world;
+    @Setting protected double x;
+    @Setting protected double y;
+    @Setting protected double z;
+    @Setting protected float pitch;
+    @Setting protected float yaw;
 
     public LocationNode() {
     }
 
     public LocationNode(Location location) {
-        this.world = location.getWorld().getUID();
+        this.world = location.getWorld().getName();
         this.x = location.getX();
         this.y = location.getY();
         this.z = location.getZ();
